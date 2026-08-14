@@ -8,14 +8,21 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cp -R "$SCRIPT_DIR/agents/"* "$CONFIG_DIR/"
 
 GEMINI_MD="$HOME/.gemini/GEMINI.md"
-RULE='- For all Git tasks, repository operations, and commands such as "commit and push", delegate execution to a subagent using invoke_subagent with Model set to "flash_lite" (Gemini 3.7 Flash Low). Define the subagent with tools to run commands if it is not already defined.'
+RULES=(
+"- Use ASD-STE100 Simplified Technical English."
+"- For all Git tasks, repository operations, and commands such as \"commit and push\", delegate execution to a subagent using invoke_subagent with Model set to \"flash_lite\" (Gemini 3.7 Flash Low). Define the subagent with tools to run commands if it is not already defined."
+"- For complex coding and infrastructure scripting tasks, invoke the \"coder\" subagent with Model set to \"flash\" (Gemini 3.7 Flash Medium) in DRY-RUN mode. When the coder subagent returns the script and Change Impact Matrix, present them to the user for confirmation. Execute the script directly in the Main Agent only after the user approves."
+"- Maintain persistent subagent instances: When a subagent (such as \"coder\" or \"git_operator\") has already been invoked in the session, reuse its active conversationID via send_message for all follow-up tasks and script iterations instead of spawning a new instance."
+)
 
-if [ -f "$GEMINI_MD" ]; then
-    if ! grep -qF "$RULE" "$GEMINI_MD"; then
-        printf "\n%s\n" "$RULE" >> "$GEMINI_MD"
+for rule in "${RULES[@]}"; do
+    if [ -f "$GEMINI_MD" ]; then
+        if ! grep -qF "$rule" "$GEMINI_MD"; then
+            printf "\n%s\n" "$rule" >> "$GEMINI_MD"
+        fi
+    else
+        printf "%s\n" "$rule" > "$GEMINI_MD"
     fi
-else
-    printf "%s\n" "$RULE" > "$GEMINI_MD"
-fi
+done
 
 echo "Agents and rules installed successfully."

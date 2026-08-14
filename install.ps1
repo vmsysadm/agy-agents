@@ -9,15 +9,22 @@ $sourceAgents = Join-Path $PSScriptRoot 'agents'
 Copy-Item -Path "$sourceAgents\*" -Destination $configDir -Recurse -Force
 
 $geminiMd = Join-Path $HOME '.gemini' 'GEMINI.md'
-$rule = '- For all Git tasks, repository operations, and commands such as "commit and push", delegate execution to a subagent using invoke_subagent with Model set to "flash_lite" (Gemini 3.7 Flash Low). Define the subagent with tools to run commands if it is not already defined.'
+$rules = @(
+    '- Use ASD-STE100 Simplified Technical English.',
+    '- For all Git tasks, repository operations, and commands such as "commit and push", delegate execution to a subagent using invoke_subagent with Model set to "flash_lite" (Gemini 3.7 Flash Low). Define the subagent with tools to run commands if it is not already defined.',
+    '- For complex coding and infrastructure scripting tasks, invoke the "coder" subagent with Model set to "flash" (Gemini 3.7 Flash Medium) in DRY-RUN mode. When the coder subagent returns the script and Change Impact Matrix, present them to the user for confirmation. Execute the script directly in the Main Agent only after the user approves.',
+    '- Maintain persistent subagent instances: When a subagent (such as "coder" or "git_operator") has already been invoked in the session, reuse its active conversationID via send_message for all follow-up tasks and script iterations instead of spawning a new instance.'
+)
 
 if (Test-Path $geminiMd) {
-    $content = Get-Content -Path $geminiMd -Raw
-    if ($content -notmatch [regex]::Escape($rule)) {
-        Add-Content -Path $geminiMd -Value "`n$rule"
+    $existing = Get-Content -Path $geminiMd -Raw
+    foreach ($rule in $rules) {
+        if ($existing -notmatch [regex]::Escape($rule)) {
+            Add-Content -Path $geminiMd -Value "`n$rule"
+        }
     }
 } else {
-    Set-Content -Path $geminiMd -Value $rule -Encoding utf8
+    Set-Content -Path $geminiMd -Value ($rules -join "`n") -Encoding utf8
 }
 
 Write-Host "Agents and rules installed successfully." -ForegroundColor Green
