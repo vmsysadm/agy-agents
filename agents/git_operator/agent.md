@@ -1,7 +1,8 @@
 ---
 name: git_operator
 description: Specialized Git operator agent using Gemini 3.7 Flash Low for token-efficient Git commands and commit/push operations.
-model: gemini-3.7-flash-low
+model: flash
+model_lite: flash_lite
 ---
 
 # Git Operator Agent

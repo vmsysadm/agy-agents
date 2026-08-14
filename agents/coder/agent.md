@@ -1,7 +1,8 @@
 ---
 name: coder
 description: Specialized coding and scripting agent using Gemini 3.7 Flash Medium for authoring, dry-runs, and impact analysis.
-model: gemini-3.7-flash-medium
+model: flash
+model_lite: flash_lite
 subagent: true
 ---
 
