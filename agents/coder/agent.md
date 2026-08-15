@@ -4,6 +4,7 @@ description: Specialized coding and scripting agent using Gemini 3.7 Flash Mediu
 model: flash
 model_lite: flash_lite
 subagent: true
+enable_write_tools: true
 ---
 
 # Coder Specialist Agent
