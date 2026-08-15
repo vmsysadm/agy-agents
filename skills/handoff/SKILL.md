@@ -3,7 +3,7 @@ name: handoff
 description: Use this skill when the user types /handoff or asks to summarize the session into a handoff.md file for the next agent session.
 ---
 
-Perform the steps below to summarize the session state into a single `handoff-<short-desctiptive-name>.md` file.
+Perform the steps below to summarize the session state into a single `handoff-<short-descriptive-name>.md` file.
 
 Rules:
 
@@ -14,6 +14,12 @@ Rules:
    - Document ruled-out hypotheses with the reason why they failed.
    - List all unexplored avenues for the next agent to evaluate.
 
+2. Formatting and Readability:
+   - Avoid excessive markup language formatting (e.g. nested tables, decorative badges, complex diagrams).
+   - Prioritize clean, human-readable plain text over markup headings, bullet lists, and code blocks.
+   - Avoid writing code in the handoff document, describe code created and infrastructure operations that were done in the previous session using plain language.
+   - Follow ASD-STE100 Simplified Technical English.
+
 Instructions:
 
 1. Inspect the context state:
@@ -21,9 +27,9 @@ Instructions:
    - List all tested hypotheses, experimental results, and unconfirmed theories.
    - Identify unresolved blockers, edge cases, and remaining tasks.
 
-2. Write or overwrite `handoff-<short-desctiptive-name>.md` in the root of the active workspace.
+2. Write or overwrite `handoff-<short-descriptive-name>.md` in the root of the active workspace.
 
 Add Next Steps & Guidance for Incoming Agent:
-    - Important guidance, pitfalls, known gotchas, constraints, or behavioral rules defined by the user in the previous session
+   - Important guidance, pitfalls, known gotchas, constraints, or behavioral rules defined by the user in the previous session
 
 Show a concise summary to the user with a clickable link to the generated file.
