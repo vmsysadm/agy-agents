@@ -7,6 +7,13 @@ mkdir -p "$CONFIG_DIR"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cp -R "$SCRIPT_DIR/agents/"* "$CONFIG_DIR/"
 
+SKILLS_DIR="$HOME/.gemini/config/skills"
+mkdir -p "$SKILLS_DIR"
+
+if [ -d "$SCRIPT_DIR/skills" ]; then
+    cp -R "$SCRIPT_DIR/skills/"* "$SKILLS_DIR/"
+fi
+
 GEMINI_MD="$HOME/.gemini/GEMINI.md"
 RULES=(
 "- Use ASD-STE100 Simplified Technical English."
@@ -26,4 +33,4 @@ for rule in "${RULES[@]}"; do
     fi
 done
 
-echo "Agents and rules installed successfully."
+echo "Agents, skills, and rules installed successfully."

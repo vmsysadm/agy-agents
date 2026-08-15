@@ -8,6 +8,16 @@ if (-not (Test-Path $configDir)) {
 $sourceAgents = Join-Path $PSScriptRoot 'agents'
 Copy-Item -Path "$sourceAgents\*" -Destination $configDir -Recurse -Force
 
+$skillsDir = Join-Path $HOME '.gemini' 'config' 'skills'
+if (-not (Test-Path $skillsDir)) {
+    New-Item -ItemType Directory -Path $skillsDir -Force | Out-Null
+}
+
+$sourceSkills = Join-Path $PSScriptRoot 'skills'
+if (Test-Path $sourceSkills) {
+    Copy-Item -Path "$sourceSkills\*" -Destination $skillsDir -Recurse -Force
+}
+
 $geminiMd = Join-Path $HOME '.gemini' 'GEMINI.md'
 $rules = @(
     '- Use ASD-STE100 Simplified Technical English.',
@@ -28,4 +38,4 @@ if (Test-Path $geminiMd) {
     Set-Content -Path $geminiMd -Value ($rules -join "`n") -Encoding utf8
 }
 
-Write-Host "Agents and rules installed successfully." -ForegroundColor Green
+Write-Host "Agents, skills, and rules installed successfully." -ForegroundColor Green

@@ -7,6 +7,10 @@ Custom specialist agent definitions and global rules for Google Antigravity (`ag
 - **`git_operator`**: Executes Git repository operations using `gemini-3.7-flash-low` (ephemeral per task).
 - **`coder`**: Authors scripts with dedicated logging, complex logic, and produces Change Impact Matrices in DRY-RUN mode using `gemini-3.7-flash-medium` (persistent per session).
 
+## Skills Included
+
+- **`handoff`**: Summarizes session state into a structured `handoff.md` file with strict epistemic standards for diagnostic investigations, root cause assertions, and handoff reporting.
+
 ## Installation
 
 ### PowerShell (Windows)
