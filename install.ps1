@@ -1,24 +1,24 @@
 $ErrorActionPreference = 'Stop'
 
-$configDir = Join-Path $HOME '.gemini' 'config' 'agents'
+$configDir = [System.IO.Path]::Combine($HOME, '.gemini', 'config', 'agents')
 if (-not (Test-Path $configDir)) {
     New-Item -ItemType Directory -Path $configDir -Force | Out-Null
 }
 
-$sourceAgents = Join-Path $PSScriptRoot 'agents'
+$sourceAgents = [System.IO.Path]::Combine($PSScriptRoot, 'agents')
 Copy-Item -Path "$sourceAgents\*" -Destination $configDir -Recurse -Force
 
-$skillsDir = Join-Path $HOME '.gemini' 'config' 'skills'
+$skillsDir = [System.IO.Path]::Combine($HOME, '.gemini', 'config', 'skills')
 if (-not (Test-Path $skillsDir)) {
     New-Item -ItemType Directory -Path $skillsDir -Force | Out-Null
 }
 
-$sourceSkills = Join-Path $PSScriptRoot 'skills'
+$sourceSkills = [System.IO.Path]::Combine($PSScriptRoot, 'skills')
 if (Test-Path $sourceSkills) {
     Copy-Item -Path "$sourceSkills\*" -Destination $skillsDir -Recurse -Force
 }
 
-$geminiMd = Join-Path $HOME '.gemini' 'GEMINI.md'
+$geminiMd = [System.IO.Path]::Combine($HOME, '.gemini', 'GEMINI.md')
 $rules = @(
     '- Use ASD-STE100 Simplified Technical English.',
     '- For all Git tasks, repository operations, and commands such as "commit and push", delegate execution to a subagent using invoke_subagent with Model set to "flash_lite" (Gemini 3.7 Flash Low). Git subagents are ephemeral and do not need to be persistent. Define the subagent with tools to run commands if it is not already defined.',

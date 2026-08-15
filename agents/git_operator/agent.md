@@ -1,9 +1,16 @@
 ---
 name: git_operator
 description: Specialized Git operator agent using Gemini 3.7 Flash Low for token-efficient Git commands and commit/push operations.
-model: flash
+model: flash_lite
 model_lite: flash_lite
-enable_write_tools: true
+subagent: true
+tools:
+  - run_command
+  - view_file
+  - grep_search
+  - list_dir
+  - write_to_file
+  - replace_file_content
 ---
 
 # Git Operator Agent
